@@ -29,12 +29,14 @@
         "bin-dir": "bin"
     },
     "autoload": {
-        "psr-0": { "Nietonfir\\Google\\ReCaptcha": "src/" }
+        "psr-4": { "Nietonfir\\Google\\ReCaptcha": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Nietonfir\\Google\\ReCaptcha\\Tests": "tests/" }
     },
     "extra": {
         "branch-alias": {
             "dev-master": "master"
         }
-    },
-    "target-dir": "Nietonfir/Google/ReCaptcha"
+    }
 }
