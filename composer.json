@@ -1,0 +1,40 @@
+{
+    "name": "nietonfir/google-recaptcha",
+    "description": "Library to simplify the server-side validation of Google's 'No CAPTCHA reCAPTCHA'",
+    "keywords": [
+        "google",
+        "recaptcha",
+        "captcha",
+        "No CAPTCHA reCAPTCHA",
+        "security"
+    ],
+    "homepage": "https://github.com/nietonfir/GoogleReCaptcha",
+    "license": "MIT",
+    "authors": [
+        {
+            "name"    : "nietonfir",
+            "email"   : "nietonfir@gmail.com",
+            "homepage": "http://nietonfir.eu",
+            "role"    : "developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "guzzlehttp/guzzle": "~5.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~3.7"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-0": { "Nietonfir\\Google\\ReCaptcha": "src/" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "master"
+        }
+    },
+    "target-dir": "Nietonfir/Google/ReCaptcha"
+}
