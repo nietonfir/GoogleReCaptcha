@@ -34,6 +34,15 @@ class ResponseTest extends TestCase
         );
     }
 
+    public function testObjectEqualityInVerify()
+    {
+        $apiResponse = '{"success":false}';
+
+        $response = new Response();
+        $rsp = $response->verify($apiResponse);
+        $this->assertEquals($response, $rsp);
+    }
+
     /**
      * @expectedException \Nietonfir\Google\ReCaptcha\Api\Exception\InvalidArgumentException
      */
