@@ -42,7 +42,7 @@ class Response implements ResponseInterface
             throw new InvalidArgumentException(
                 sprintf(
                     'Failed to parse API response as JSON string "%s" with the following error: "%s"',
-                    $data,
+                    $response,
                     json_last_error_msg()
                 ),
                 json_last_error()
