@@ -31,9 +31,6 @@ class Response implements ResponseInterface
      */
     public function __construct($response)
     {
-        // TODO - check that the data IS a json string
-        // TODO - and that it has at least the success attribute!
-
         $data = json_decode($response, true);
 
         // validity check - $response must be a JSON string
