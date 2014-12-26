@@ -20,7 +20,7 @@ interface ResponseInterface
      * to the corresponding attributes.
      *
      * @param  string $response
-     * @return void
+     * @return ResponseInterface
      */
     public function verify($response);
 
