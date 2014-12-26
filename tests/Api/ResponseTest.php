@@ -12,11 +12,31 @@ use Nietonfir\Google\ReCaptcha\Api\Response;
  */
 class ResponseTest extends TestCase
 {
-    public function testInstantiation()
+    public function testAPIInstantiation()
     {
         $apiResponse = '{"success":false,"error-codes":[]}';
 
         $response = new Response($apiResponse);
+
+        $this->assertInstanceOf(
+            '\Nietonfir\Google\ReCaptcha\Api\ResponseInterface',
+            $response
+        );
+    }
+
+    public function testEmptyInstantiation()
+    {
+        $response = new Response();
+
+        $this->assertInstanceOf(
+            '\Nietonfir\Google\ReCaptcha\Api\ResponseInterface',
+            $response
+        );
+    }
+
+    public function testFactoryInstantation()
+    {
+        $response = Response::factory();
 
         $this->assertInstanceOf(
             '\Nietonfir\Google\ReCaptcha\Api\ResponseInterface',

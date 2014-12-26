@@ -16,6 +16,22 @@ namespace Nietonfir\Google\ReCaptcha\Api;
 interface ResponseInterface
 {
     /**
+     * Expose a factory function for object initialization.
+     *
+     * @return ResponseInterface
+     */
+    public static function factory();
+
+    /**
+     * Decodes the JSON encoded response from the API and assigns the values
+     * to the corresponding attributes.
+     *
+     * @param  string $response
+     * @return void
+     */
+    public function verify($response);
+
+    /**
      * Returns the validation state of the response.
      *
      * @return boolean

@@ -19,17 +19,36 @@ use Nietonfir\Google\ReCaptcha\Api\Exception\DomainException,
  */
 class Response implements ResponseInterface
 {
-    private $success;
+    private $success = false;
 
-    private $errorCodes;
+    private $errorCodes = array();
 
     /**
-     * Decodes the JSON encoded response from the API and assigns the values
-     * to the corresponding attributes.
-     *
-     * @param string $response
+     * {@inheritdoc}
      */
-    public function __construct($response)
+    public static function factory()
+    {
+        return new self();
+    }
+
+    /**
+     * Either simply creates a new object instance or also decodes the
+     * JSON encoded response from the API and assigns the values to the
+     * corresponding attributes.
+     *
+     * @param string|null $response
+     */
+    public function __construct($response = null)
+    {
+        if (is_string($response)) {
+            $this->verify($response);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function verify($response)
     {
         $data = json_decode($response, true);
 
@@ -55,10 +74,11 @@ class Response implements ResponseInterface
         }
 
         $this->success = $data['success'];
-        $this->errorCodes = (isset($data['error-codes']))
-            ? $data['error-codes']
-            : array()
-        ;
+        if (isset($data['error-codes'])) {
+            $this->errorCodes = $data['error-codes'];
+        }
+
+        return $this;
     }
 
     /**
