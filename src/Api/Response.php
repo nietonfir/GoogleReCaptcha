@@ -24,14 +24,6 @@ class Response implements ResponseInterface
     private $errorCodes = array();
 
     /**
-     * {@inheritdoc}
-     */
-    public static function factory()
-    {
-        return new self();
-    }
-
-    /**
      * Either simply creates a new object instance or also decodes the
      * JSON encoded response from the API and assigns the values to the
      * corresponding attributes.

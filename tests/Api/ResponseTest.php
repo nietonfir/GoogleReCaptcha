@@ -34,16 +34,6 @@ class ResponseTest extends TestCase
         );
     }
 
-    public function testFactoryInstantation()
-    {
-        $response = Response::factory();
-
-        $this->assertInstanceOf(
-            '\Nietonfir\Google\ReCaptcha\Api\ResponseInterface',
-            $response
-        );
-    }
-
     /**
      * @expectedException \Nietonfir\Google\ReCaptcha\Api\Exception\InvalidArgumentException
      */
