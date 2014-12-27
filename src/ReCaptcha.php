@@ -8,6 +8,8 @@ use Nietonfir\Google\ReCaptcha\Api\RequestDataInterface,
 
 class ReCaptcha implements ReCaptchaInterface
 {
+    const API_URL = 'https://www.google.com/recaptcha/api/siteverify';
+
     private $client;
 
     private $submitted;
@@ -26,11 +28,16 @@ class ReCaptcha implements ReCaptchaInterface
      */
     public function processRequest(RequestDataInterface $requestData)
     {
-        $response = $this->client->get('', array(
+        $url = ($this->client->getBaseUrl() == '')
+            ? self::API_URL
+            : null;
+
+        $response = $this->client->get($url, array(
             'query' => $requestData->getValue()
         ));
 
         $this->submitted = true;
+
 
         return $this->response->verify($response->getBody());
     }
