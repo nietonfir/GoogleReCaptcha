@@ -51,7 +51,7 @@ class Response implements ResponseInterface
                 sprintf(
                     'Failed to parse API response as JSON string "%s" with the following error: "%s"',
                     $response,
-                    json_last_error_msg()
+                    self::getLastJsonError()
                 ),
                 json_last_error()
             );
@@ -87,5 +87,30 @@ class Response implements ResponseInterface
     public function getErrors()
     {
         return $this->errorCodes;
+    }
+
+    /**
+     * @return string The last error message created by {@link json_decode()}
+     *
+     * @link http://php.net/manual/en/function.json-last-error-msg.php#113243
+     */
+    private static function getLastJsonError()
+    {
+        if (function_exists('json_last_error_msg')) {
+            return json_last_error_msg();
+        }
+        static $errors = array(
+            JSON_ERROR_NONE           => null,
+            JSON_ERROR_DEPTH          => 'Maximum stack depth exceeded',
+            JSON_ERROR_STATE_MISMATCH => 'Underflow or the modes mismatch',
+            JSON_ERROR_CTRL_CHAR      => 'Unexpected control character found',
+            JSON_ERROR_SYNTAX         => 'Syntax error, malformed JSON',
+            JSON_ERROR_UTF8           => 'Malformed UTF-8 characters, possibly incorrectly encoded',
+        );
+        $error = json_last_error();
+
+        return array_key_exists($error, $errors)
+            ? $errors[$error]
+            : sprintf('Unknown error (%s)', $error);
     }
 }
