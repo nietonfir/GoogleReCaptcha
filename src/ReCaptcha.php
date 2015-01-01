@@ -10,11 +10,11 @@ class ReCaptcha implements ReCaptchaInterface
 {
     const API_URL = 'https://www.google.com/recaptcha/api/siteverify';
 
-    private $client;
+    protected $client;
 
-    private $submitted;
+    protected $submitted;
 
-    private $response;
+    protected $response;
 
     public function __construct(ClientInterface $client, ResponseInterface $response)
     {

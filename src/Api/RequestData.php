@@ -16,11 +16,11 @@ namespace Nietonfir\Google\ReCaptcha\Api;
  */
 class RequestData implements RequestDataInterface
 {
-    private $secret;
+    protected $secret;
 
-    private $userResponse;
+    protected $userResponse;
 
-    private $remoteIP;
+    protected $remoteIP;
 
     /**
      * Instantiate the object with the required values.

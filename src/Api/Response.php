@@ -19,9 +19,9 @@ use Nietonfir\Google\ReCaptcha\Api\Exception\DomainException,
  */
 class Response implements ResponseInterface
 {
-    private $success = false;
+    protected $success = false;
 
-    private $errorCodes = array();
+    protected $errorCodes = array();
 
     /**
      * Either simply creates a new object instance or also decodes the
