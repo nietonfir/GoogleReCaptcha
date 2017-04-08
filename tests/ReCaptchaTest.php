@@ -35,6 +35,9 @@ class ReCaptchaTest extends TestCase
         $this->assertEquals('https://www.google.com/recaptcha/api/siteverify', ReCaptcha::API_URL);
     }
 
+    /**
+     * @group legacy
+     */
     public function testInstantation()
     {
         $client = $this->getClientMock(array(
@@ -86,6 +89,9 @@ class ReCaptchaTest extends TestCase
         return $reCaptcha;
     }
 
+    /**
+     * @group legacy
+     */
     public function testDeprecatedGetResponse()
     {
         $json = '{"success":true}';
