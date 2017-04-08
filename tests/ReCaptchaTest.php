@@ -23,6 +23,18 @@ class ReCaptchaTest extends TestCase
             ->getMock();
     }
 
+    public function testApiUrlValue()
+    {
+        $clazz = new \ReflectionClass(ReCaptcha::class);
+        $constants = $clazz->getConstants();
+
+        $this->assertNotEmpty($constants);
+        $this->assertCount(1, $constants);
+        $this->assertEquals('API_URL', key($constants));
+
+        $this->assertEquals('https://www.google.com/recaptcha/api/siteverify', ReCaptcha::API_URL);
+    }
+
     public function testInstantation()
     {
         $client = $this->getClientMock(array(
