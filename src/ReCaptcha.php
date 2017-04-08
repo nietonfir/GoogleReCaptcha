@@ -46,8 +46,9 @@ class ReCaptcha implements ReCaptchaInterface
      */
     public function getResponse()
     {
+        @trigger_error('Using getResponse is deprecated since 0.1.0 and will be removed in 1.0.0. Until then the last response will be returned.', E_USER_DEPRECATED);
+
         if ($this->lastResponse) {
-            @trigger_error('Using getResponse is deprecated since 0.1.0 and will be removed in 1.0.0. Until then it will return the last response available.', E_USER_DEPRECATED);
             return $this->lastResponse;
         }
     }

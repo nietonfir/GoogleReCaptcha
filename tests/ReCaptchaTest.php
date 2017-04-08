@@ -70,6 +70,57 @@ class ReCaptchaTest extends TestCase
         $this->assertInternalType('array', $errors);
         $this->assertCount(1, $errors);
         $this->assertEquals('invalid-input-secret', $errors[0]);
+
+        return $reCaptcha;
+    }
+
+    public function testDeprecatedGetResponse()
+    {
+        $json = '{"success":true}';
+
+        $responseMock = new Api\Response();
+
+        $this->responseFactory->expects($this->once())
+            ->method('createResponse')
+            ->will($this->returnValue($responseMock))
+        ;
+
+        $client = $this->getClientMock(array(
+            new Response(200, array(), Stream::factory($json))
+        ));
+
+        $requestData = new Api\RequestData('secret', 'userResponse', '127.0.0.1');
+
+        $reCaptcha = new ReCaptcha($client, $this->responseFactory);
+
+        $this->assertEmpty($reCaptcha->getResponse());
+
+        $response = $reCaptcha->processRequest($requestData);
+
+        $this->assertInstanceOf(
+            Api\ResponseInterface::class,
+            $response
+        );
+        $this->assertEquals($responseMock, $response);
+        $this->assertTrue($response->isValid());
+
+        return $reCaptcha;
+    }
+
+    /**
+     * @group legacy
+     * @depends testDeprecatedGetResponse
+     * @expectedDeprecation Using getResponse is deprecated since 0.1.0 and will be removed in 1.0.0. Until then the last response will be returned.
+     */
+    public function testDeprecatedGetResponseError($reCaptcha)
+    {
+        $response = $reCaptcha->getResponse();
+
+        $this->assertInstanceOf(
+            Api\ResponseInterface::class,
+            $response
+        );
+        $this->assertTrue($response->isValid());
     }
 
     private function getClientMock($responses)
