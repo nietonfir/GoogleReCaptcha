@@ -32,10 +32,7 @@
         "psr-4": { "Nietonfir\\Google\\ReCaptcha\\": "src/" }
     },
     "autoload-dev": {
-        "psr-4": {
-            "Nietonfir\\Google\\ReCaptcha\\Tests\\": "tests/",
-            "Nietonfir\\Google\\ReCaptcha\\": "tests/"
-        }
+        "psr-4": { "Nietonfir\\Google\\ReCaptcha\\": "tests/" }
     },
     "extra": {
         "branch-alias": {

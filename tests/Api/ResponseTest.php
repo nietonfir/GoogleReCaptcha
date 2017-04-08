@@ -1,9 +1,8 @@
 <?php
 
-namespace Nietonfir\Google\ReCaptcha\Tests\Api;
+namespace Nietonfir\Google\ReCaptcha\Api;
 
-use Nietonfir\Google\ReCaptcha\Tests\TestCase;
-use Nietonfir\Google\ReCaptcha\Api\Response;
+use Nietonfir\Google\ReCaptcha\TestCase;
 
 /*
  * Test the API response helper class
@@ -19,7 +18,7 @@ class ResponseTest extends TestCase
         $response = new Response($apiResponse);
 
         $this->assertInstanceOf(
-            '\Nietonfir\Google\ReCaptcha\Api\ResponseInterface',
+            ResponseInterface::class,
             $response
         );
     }
@@ -29,7 +28,7 @@ class ResponseTest extends TestCase
         $response = new Response();
 
         $this->assertInstanceOf(
-            '\Nietonfir\Google\ReCaptcha\Api\ResponseInterface',
+            ResponseInterface::class,
             $response
         );
     }

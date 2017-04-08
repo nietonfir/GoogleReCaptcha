@@ -1,13 +1,12 @@
 <?php
 
-namespace Nietonfir\Google\ReCaptcha\Tests;
+namespace Nietonfir\Google\ReCaptcha;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Subscriber\Mock;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Stream\Stream;
-use Nietonfir\Google\ReCaptcha\ReCaptcha;
-use Nietonfir\Google\ReCaptcha\Api\RequestData;
+use Nietonfir\Google\ReCaptcha\Api;
 
 /*
  * Main library test
@@ -20,7 +19,7 @@ class ReCaptchaTest extends TestCase
 
     public function setUp()
     {
-        $this->responseFactory = $this->getMockBuilder('\Nietonfir\Google\ReCaptcha\Api\ResponseFactory')
+        $this->responseFactory = $this->getMockBuilder(Api\ResponseFactory::class)
             ->getMock();
     }
 
@@ -33,7 +32,7 @@ class ReCaptchaTest extends TestCase
         $reCaptcha = new ReCaptcha($client, $this->responseFactory);
 
         $this->assertInstanceOf(
-            '\Nietonfir\Google\ReCaptcha\ReCaptchaInterface',
+            ReCaptchaInterface::class,
             $reCaptcha
         );
         $this->assertEmpty($reCaptcha->getResponse());
@@ -43,7 +42,7 @@ class ReCaptchaTest extends TestCase
     {
         $json = '{"success":false,"error-codes":["invalid-input-secret"]}';
 
-        $responseMock = new \Nietonfir\Google\ReCaptcha\Api\Response();
+        $responseMock = new Api\Response();
 
         $this->responseFactory->expects($this->once())
             ->method('createResponse')
@@ -54,13 +53,13 @@ class ReCaptchaTest extends TestCase
             new Response(200, array(), Stream::factory($json))
         ));
 
-        $requestData = new RequestData('secret', 'userResponse', '127.0.0.1');
+        $requestData = new Api\RequestData('secret', 'userResponse', '127.0.0.1');
 
         $reCaptcha = new ReCaptcha($client, $this->responseFactory);
         $response = $reCaptcha->processRequest($requestData);
 
         $this->assertInstanceOf(
-            '\Nietonfir\Google\ReCaptcha\Api\ResponseInterface',
+            Api\ResponseInterface::class,
             $response
         );
         $this->assertEquals($responseMock, $response);

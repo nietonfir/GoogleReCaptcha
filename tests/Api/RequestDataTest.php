@@ -1,9 +1,8 @@
 <?php
 
-namespace Nietonfir\Google\ReCaptcha\Tests\Api;
+namespace Nietonfir\Google\ReCaptcha\Api;
 
-use Nietonfir\Google\ReCaptcha\Tests\TestCase;
-use Nietonfir\Google\ReCaptcha\Api\RequestData;
+use Nietonfir\Google\ReCaptcha\TestCase;
 
 /*
  * Test the RequestData value object
@@ -17,7 +16,7 @@ class RequestDataTest extends TestCase
         $requestData = new RequestData('foo', 'bar', 'baz');
 
         $this->assertInstanceOf(
-            '\Nietonfir\Google\ReCaptcha\Api\RequestDataInterface',
+            RequestDataInterface::class,
             $requestData
         );
     }
