@@ -23,6 +23,8 @@
         "guzzlehttp/guzzle": "~5.1"
     },
     "require-dev": {
+        "symfony/yaml": "~2.1",
+        "phpdocumentor/reflection-docblock": "^2.0",
         "phpunit/phpunit": "~4.8",
         "symfony/phpunit-bridge": "^3.2"
     },
