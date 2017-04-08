@@ -53,7 +53,7 @@ A sample validation client could look like the following:
 use GuzzleHttp\Client;
 use Nietonfir\Google\ReCaptcha\ReCaptcha;
 use Nietonfir\Google\ReCaptcha\Api\RequestData,
-    Nietonfir\Google\ReCaptcha\Api\Response;
+    Nietonfir\Google\ReCaptcha\Api\ResponseFactory;
 
 $requestData = new RequestData(
     'YOUR_API_SECRET_HERE',         // secret
@@ -61,11 +61,12 @@ $requestData = new RequestData(
     $_SERVER['REMOTE_ADDR']         // end user IP
 );
 
-$reCaptcha = new ReCaptcha(new Client()), new Response());
-$reCaptcha->processRequest($requestData);
-if ($reCaptcha->getResponse()->isValid()) {
+$reCaptcha = new ReCaptcha(new Client(), new ResponseFactory());
+$response = $reCaptcha->processRequest($requestData);
+
+if ($response->isValid()) {
     echo 'I\'m not a robot';
 } else {
-    var_dump($reCaptcha->getResponse()->getErrors());
+    var_dump($response->getErrors());
 }
 ```
