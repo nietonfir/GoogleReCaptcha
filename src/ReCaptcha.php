@@ -4,23 +4,22 @@ namespace Nietonfir\Google\ReCaptcha;
 
 use GuzzleHttp\ClientInterface;
 use Nietonfir\Google\ReCaptcha\Api\RequestDataInterface,
-    Nietonfir\Google\ReCaptcha\Api\ResponseInterface;
+    Nietonfir\Google\ReCaptcha\Api\ResponseFactoryInterface;
 
 class ReCaptcha implements ReCaptchaInterface
 {
     const API_URL = 'https://www.google.com/recaptcha/api/siteverify';
 
-    protected $client;
+    private $client;
 
-    protected $submitted;
+    private $factory;
 
-    protected $response;
+    private $lastResponse;
 
-    public function __construct(ClientInterface $client, ResponseInterface $response)
+    public function __construct(ClientInterface $client, ResponseFactoryInterface $factory)
     {
-        $this->client = $client;
-        $this->response = $response;
-        $this->submitted = false;
+        $this->client  = $client;
+        $this->factory = $factory;
     }
 
     /**
@@ -32,14 +31,14 @@ class ReCaptcha implements ReCaptchaInterface
             ? self::API_URL
             : null;
 
-        $response = $this->client->get($url, array(
+        $data = $this->client->get($url, array(
             'query' => $requestData->getValue()
         ));
 
-        $this->submitted = true;
+        $response = $this->factory->createResponse();
+        $this->lastResponse = $response->verify($data->getBody());
 
-
-        return $this->response->verify($response->getBody());
+        return $response;
     }
 
     /**
@@ -47,6 +46,9 @@ class ReCaptcha implements ReCaptchaInterface
      */
     public function getResponse()
     {
-        return $this->response;
+        if ($this->lastResponse) {
+            @trigger_error('Using getResponse is deprecated since 0.1.0 and will be removed in 1.0.0. Until then it will return the last response available.', E_USER_DEPRECATED);
+            return $this->lastResponse;
+        }
     }
 }

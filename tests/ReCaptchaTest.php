@@ -16,11 +16,11 @@ use Nietonfir\Google\ReCaptcha\Api\RequestData;
  */
 class ReCaptchaTest extends TestCase
 {
-    private $response;
+    private $responseFactory;
 
     public function setUp()
     {
-        $this->response = $this->getMockBuilder('\Nietonfir\Google\ReCaptcha\Api\Response')
+        $this->responseFactory = $this->getMockBuilder('\Nietonfir\Google\ReCaptcha\Api\ResponseFactory')
             ->getMock();
     }
 
@@ -30,35 +30,47 @@ class ReCaptchaTest extends TestCase
             new Response(200)
         ));
 
-        $reCaptcha = new ReCaptcha($client, $this->response);
+        $reCaptcha = new ReCaptcha($client, $this->responseFactory);
 
         $this->assertInstanceOf(
             '\Nietonfir\Google\ReCaptcha\ReCaptchaInterface',
             $reCaptcha
         );
-        $this->assertEquals($this->response, $reCaptcha->getResponse());
+        $this->assertEmpty($reCaptcha->getResponse());
     }
 
     public function testAPIResponse()
     {
-        $this->response->expects($this->once())
-            ->method('verify')
-            ->with('{"success":false,"error-codes":["invalid-input-secret"]}')
-            ->will($this->returnSelf())
+        $json = '{"success":false,"error-codes":["invalid-input-secret"]}';
+
+        $responseMock = new \Nietonfir\Google\ReCaptcha\Api\Response();
+
+        $this->responseFactory->expects($this->once())
+            ->method('createResponse')
+            ->will($this->returnValue($responseMock))
         ;
 
         $client = $this->getClientMock(array(
-            new Response(200, array(), Stream::factory(
-                '{"success":false,"error-codes":["invalid-input-secret"]}'
-            ))
+            new Response(200, array(), Stream::factory($json))
         ));
 
         $requestData = new RequestData('secret', 'userResponse', '127.0.0.1');
 
-        $reCaptcha = new ReCaptcha($client, $this->response);
+        $reCaptcha = new ReCaptcha($client, $this->responseFactory);
         $response = $reCaptcha->processRequest($requestData);
 
-        $this->assertEquals($response, $this->response);
+        $this->assertInstanceOf(
+            '\Nietonfir\Google\ReCaptcha\Api\ResponseInterface',
+            $response
+        );
+        $this->assertEquals($responseMock, $response);
+        $this->assertFalse($response->isValid());
+
+        $errors = $response->getErrors();
+
+        $this->assertInternalType('array', $errors);
+        $this->assertCount(1, $errors);
+        $this->assertEquals('invalid-input-secret', $errors[0]);
     }
 
     private function getClientMock($responses)

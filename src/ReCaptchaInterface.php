@@ -19,6 +19,8 @@ interface ReCaptchaInterface
      * Just return the provided response object. If the request was already
      * processed it will contain the necessary data from the API.
      *
+     * @deprecated 0.1.0
+     *
      * @return ResponseInterface
      */
     public function getResponse();
