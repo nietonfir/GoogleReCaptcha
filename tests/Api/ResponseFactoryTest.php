@@ -16,14 +16,14 @@ class ResponseFactoryTest extends TestCase
         $factory = new ResponseFactory();
 
         $this->assertInstanceOf(
-            ResponseFactoryInterface::class,
+            '\Nietonfir\Google\ReCaptcha\Api\ResponseFactoryInterface',
             $factory
         );
 
         $response = $factory->createResponse();
 
         $this->assertInstanceOf(
-            ResponseInterface::class,
+            '\Nietonfir\Google\ReCaptcha\Api\ResponseInterface',
             $response
         );
     }

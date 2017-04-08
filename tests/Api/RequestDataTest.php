@@ -16,7 +16,7 @@ class RequestDataTest extends TestCase
         $requestData = new RequestData('foo', 'bar', 'baz');
 
         $this->assertInstanceOf(
-            RequestDataInterface::class,
+            '\Nietonfir\Google\ReCaptcha\Api\RequestDataInterface',
             $requestData
         );
     }

@@ -18,7 +18,7 @@ class ResponseTest extends TestCase
         $response = new Response($apiResponse);
 
         $this->assertInstanceOf(
-            ResponseInterface::class,
+            '\Nietonfir\Google\ReCaptcha\Api\ResponseInterface',
             $response
         );
     }
@@ -28,7 +28,7 @@ class ResponseTest extends TestCase
         $response = new Response();
 
         $this->assertInstanceOf(
-            ResponseInterface::class,
+            '\Nietonfir\Google\ReCaptcha\Api\ResponseInterface',
             $response
         );
     }

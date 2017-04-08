@@ -19,13 +19,13 @@ class ReCaptchaTest extends TestCase
 
     public function setUp()
     {
-        $this->responseFactory = $this->getMockBuilder(Api\ResponseFactory::class)
+        $this->responseFactory = $this->getMockBuilder('\Nietonfir\Google\ReCaptcha\Api\ResponseFactory')
             ->getMock();
     }
 
     public function testApiUrlValue()
     {
-        $clazz = new \ReflectionClass(ReCaptcha::class);
+        $clazz = new \ReflectionClass('\Nietonfir\Google\ReCaptcha\ReCaptcha');
         $constants = $clazz->getConstants();
 
         $this->assertNotEmpty($constants);
@@ -47,7 +47,7 @@ class ReCaptchaTest extends TestCase
         $reCaptcha = new ReCaptcha($client, $this->responseFactory);
 
         $this->assertInstanceOf(
-            ReCaptchaInterface::class,
+            '\Nietonfir\Google\ReCaptcha\ReCaptchaInterface',
             $reCaptcha
         );
         $this->assertEmpty($reCaptcha->getResponse());
@@ -74,7 +74,7 @@ class ReCaptchaTest extends TestCase
         $response = $reCaptcha->processRequest($requestData);
 
         $this->assertInstanceOf(
-            Api\ResponseInterface::class,
+            '\Nietonfir\Google\ReCaptcha\Api\ResponseInterface',
             $response
         );
         $this->assertEquals($responseMock, $response);
@@ -116,7 +116,7 @@ class ReCaptchaTest extends TestCase
         $response = $reCaptcha->processRequest($requestData);
 
         $this->assertInstanceOf(
-            Api\ResponseInterface::class,
+            '\Nietonfir\Google\ReCaptcha\Api\ResponseInterface',
             $response
         );
         $this->assertEquals($responseMock, $response);
@@ -135,7 +135,7 @@ class ReCaptchaTest extends TestCase
         $response = $reCaptcha->getResponse();
 
         $this->assertInstanceOf(
-            Api\ResponseInterface::class,
+            '\Nietonfir\Google\ReCaptcha\Api\ResponseInterface',
             $response
         );
         $this->assertTrue($response->isValid());
