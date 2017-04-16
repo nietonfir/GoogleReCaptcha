@@ -39,6 +39,7 @@ interface ResponseInterface
      *   invalid-input-secret    The secret parameter is invalid or malformed.
      *   missing-input-response  The response parameter is missing.
      *   invalid-input-response  The response parameter is invalid or malformed.
+     *   bad-request             The request is invalid or malformed.
      *
      * @return array
      */
