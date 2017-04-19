@@ -118,7 +118,7 @@ class ResponseTest extends TestCase
         $challengeTime = $response->getChallengeTime();
         $this->assertEquals(date_default_timezone_get(), $challengeTime->getTimezone()->getName());
         if (version_compare(PHP_VERSION, '5.5', '>=')) {
-            $this->assertInstanceOf(\DateTimeImmutable::class, $challengeTime);
+            $this->assertInstanceOf('\DateTimeImmutable', $challengeTime);
         } else {
             $this->assertInstanceOf('\DateTime', $challengeTime);
         }
