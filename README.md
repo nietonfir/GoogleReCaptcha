@@ -65,6 +65,8 @@ $reCaptcha = new ReCaptcha(new Client(), new ResponseFactory());
 $response = $reCaptcha->processRequest($requestData);
 
 if ($response->isValid()) {
+    // check the hostname if "Domain Name Validation" is turned off
+    // if($_SERVER['SERVER_NAME'] === $response->getHostName()) { … }
     echo 'I\'m not a robot';
 } else {
     var_dump($response->getErrors());
