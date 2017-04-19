@@ -19,7 +19,11 @@ use Nietonfir\Google\ReCaptcha\Api\Exception\DomainException,
  */
 class Response implements ResponseInterface
 {
-    protected $success = false;
+    protected $success    = false;
+
+    protected $time       = null;
+
+    protected $hostname   = '';
 
     protected $errorCodes = array();
 
@@ -57,15 +61,31 @@ class Response implements ResponseInterface
             );
         }
 
-        // validity check - $response must contain a 'success' attribute
-        if (!isset($data['success'])) {
+        // validity check - $response must contain the following attributes:
+        // success, challenge_ts, hostname
+        $required = array('success', 'challenge_ts', 'hostname');
+        $diff = array_diff_key(array_flip($required), $data);
+        $missingNo = count($diff);
+        if (0 < $missingNo) {
             throw new DomainException(sprintf(
-                'API Response has no success attribute: "%s"',
-                $response
+                'The following %s missing from the API response: "%s"',
+                $missingNo == 1 ? 'attribute is' : 'attributes are',
+                join('", "', array_flip(array_intersect_key(array_flip($required), $diff)))
             ));
         }
 
         $this->success = $data['success'];
+
+        if (class_exists('\DateTimeImmutable')) {
+            $this->time = new \DateTimeImmutable($data['challenge_ts']);
+        } else {
+            $this->time = new \DateTime($data['challenge_ts']);
+        }
+
+        $this->time = $this->time->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+
+        $this->hostname = $data['hostname'];
+
         if (isset($data['error-codes'])) {
             $this->errorCodes = $data['error-codes'];
         }
@@ -79,6 +99,22 @@ class Response implements ResponseInterface
     public function isValid()
     {
         return $this->success;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getChallengeTime()
+    {
+        return $this->time;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getHostname()
+    {
+        return $this->hostname;
     }
 
     /**

@@ -32,6 +32,20 @@ interface ResponseInterface
     public function isValid();
 
     /**
+     * Returns the timestamp of the challenge load.
+     *
+     * @return DateTime|DateTimeImmutable
+     */
+    public function getChallengeTime();
+
+    /**
+     * Returns the hostname of the site where the reCAPTCHA was solved.
+     *
+     * @return string
+     */
+    public function getHostname();
+
+    /**
      * Returns the errors of the response
      * The following error-codes are currently in use:
      *   Error code              Description

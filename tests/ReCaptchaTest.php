@@ -55,7 +55,7 @@ class ReCaptchaTest extends TestCase
 
     public function testAPIResponse()
     {
-        $json = '{"success":false,"error-codes":["invalid-input-secret"]}';
+        $json = '{"success":false,"challenge_ts":"2017-04-17T00:18:56Z","hostname":"localhost","error-codes":["invalid-input-secret"]}';
 
         $responseMock = new Api\Response();
 
@@ -94,7 +94,7 @@ class ReCaptchaTest extends TestCase
      */
     public function testDeprecatedGetResponse()
     {
-        $json = '{"success":true}';
+        $json = '{"success":true,"challenge_ts":"2017-04-17T00:18:56Z","hostname":"localhost"}';
 
         $responseMock = new Api\Response();
 
